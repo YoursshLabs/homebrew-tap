@@ -1,0 +1,46 @@
+name: Update cask
+
+# Bumps Casks/yourssh.rb to the latest YourSSH release (version + sha256 of
+# the signed, notarized DMG). Runs on a schedule and on demand; the app's
+# release workflow can also trigger it with a repository_dispatch.
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+  repository_dispatch:
+    types: [yourssh-release]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-cask
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bump to the latest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag=$(gh release view --repo YoursshLabs/yourssh --json tagName --jq .tagName)
+          version="${tag#v}"
+          if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Unexpected release tag: $tag"; exit 1
+          fi
+          current=$(sed -nE 's/^  version "([^"]+)"/\1/p' Casks/yourssh.rb)
+          if [ "$current" = "$version" ]; then
+            echo "Cask already at $version"; exit 0
+          fi
+          dmg="YourSSH-${version}-macOS-universal.dmg"
+          gh release download "$tag" --repo YoursshLabs/yourssh --pattern "$dmg" --dir "$RUNNER_TEMP"
+          sha=$(sha256sum "$RUNNER_TEMP/$dmg" | cut -d' ' -f1)
+          sed -i -E "s/^  version \"[^\"]+\"/  version \"${version}\"/; s/^  sha256 \"[0-9a-f]+\"/  sha256 \"${sha}\"/" Casks/yourssh.rb
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "yourssh ${version}"
+          git push
