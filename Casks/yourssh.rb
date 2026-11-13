@@ -14,14 +14,14 @@ cask "yourssh" do
   end
 
   auto_updates true
-  depends_on macos: ">= :monterey"
+  depends_on macos: :monterey
 
   app "YourSSH.app"
 
   zap trash: [
     "~/.yourssh",
-    "~/Library/Application Support/YourSSH",
     "~/Library/Application Support/com.thangnm.yourssh",
+    "~/Library/Application Support/YourSSH",
     "~/Library/Caches/com.thangnm.yourssh",
     "~/Library/Preferences/com.thangnm.yourssh.plist",
     "~/Library/Saved Application State/com.thangnm.yourssh.savedState",
