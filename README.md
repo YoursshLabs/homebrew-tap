@@ -12,7 +12,7 @@ The cask installs the signed and notarized universal DMG from the [YourSSH relea
 
 Uninstall with `brew uninstall --cask yourssh`; add `--zap` to also remove its settings and data.
 
-Documentation: https://your-ssh.mintlify.site
+Documentation: https://yoursshlabs.com
 
 ## Maintenance
 

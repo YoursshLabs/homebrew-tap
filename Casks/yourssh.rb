@@ -5,7 +5,7 @@ cask "yourssh" do
   url "https://github.com/YoursshLabs/yourssh/releases/download/v#{version}/YourSSH-#{version}-macOS-universal.dmg"
   name "YourSSH"
   desc "SSH, SFTP, RDP and VNC client"
-  homepage "https://your-ssh.mintlify.site/"
+  homepage "https://yoursshlabs.com/"
 
   livecheck do
     url :url
