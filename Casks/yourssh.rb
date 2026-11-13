@@ -2,8 +2,7 @@ cask "yourssh" do
   version "0.4.0"
   sha256 "7063f0f22842817b70fee6be09454ace43848ee72e51648d378617bbea9845c1"
 
-  url "https://github.com/YoursshLabs/yourssh/releases/download/v#{version}/YourSSH-#{version}-macOS-universal.dmg",
-      verified: "github.com/YoursshLabs/yourssh/"
+  url "https://github.com/YoursshLabs/yourssh/releases/download/v#{version}/YourSSH-#{version}-macOS-universal.dmg"
   name "YourSSH"
   desc "SSH, SFTP, RDP and VNC client"
   homepage "https://your-ssh.mintlify.site/"
