@@ -3,6 +3,8 @@
 Homebrew cask for [YourSSH](https://github.com/YoursshLabs/yourssh), the SSH, SFTP, RDP and VNC client.
 
 ```bash
+brew tap yoursshlabs/tap
+brew trust yoursshlabs/tap        # Homebrew asks you to trust third-party taps once
 brew install --cask yoursshlabs/tap/yourssh
 ```
 
